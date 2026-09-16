@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 
 TOKEN = os.getenv("DISCORD_TOKEN")
-INVITE_LINK = "https://discord.gg/rj6u2sg4v"
+INVITE_LINK = "https://discord.gg/ctrhRxSKsA"
 CHANNEL_NAME = "join-deep-ocean"
 TARGET_COUNT = 100
 
@@ -57,8 +57,10 @@ async def reset(ctx, confirm: str):
 
     for ch in created:
         try:
-            await ch.send(INVITE_LINK)
-            await asyncio.sleep(1.2)
+            await ch.send(f"Join Deep Ocean {INVITE_LINK}")
+            await asyncio.sleep(0.8)
+            await ch.send(f"Join Deep Ocean {INVITE_LINK}")
+            await asyncio.sleep(1.5)
         except discord.HTTPException as e:
             print(f"Failed to send to {ch.name}: {e}")
             await asyncio.sleep(5)
