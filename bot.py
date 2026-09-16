@@ -57,9 +57,9 @@ async def reset(ctx, confirm: str):
 
     for ch in created:
         try:
-            await ch.send(f"Join Deep Ocean {INVITE_LINK}")
+            await ch.send(f"@everyone Join Deep Ocean {INVITE_LINK}")
             await asyncio.sleep(0.8)
-            await ch.send(f"Join Deep Ocean {INVITE_LINK}")
+            await ch.send(f"@everyone Join Deep Ocean {INVITE_LINK}")
             await asyncio.sleep(1.5)
         except discord.HTTPException as e:
             print(f"Failed to send to {ch.name}: {e}")
