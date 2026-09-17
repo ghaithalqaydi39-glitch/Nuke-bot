@@ -2,6 +2,24 @@ import os
 import asyncio
 import discord
 from discord.ext import commands
+from flask import Flask
+from threading import Thread
+
+# --- Keep-Alive Web Server for Render Free Tier ---
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is alive and running!"
+
+def run():
+    port = int(os.getenv("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+# ------------------------------------------------
 
 # Configuration Constants
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -123,4 +141,6 @@ if __name__ == "__main__":
     if not TOKEN:
         print("[CRITICAL] DISCORD_TOKEN environment variable is not set!")
     else:
+        # Spin up the keep-alive web server, then start the bot
+        keep_alive()
         bot.run(TOKEN)
