@@ -50,7 +50,7 @@ async def on_ready():
 async def kill_server(ctx, confirm: str = None):
     # Verification check for the CONFIRM argument
     if confirm != "CONFIRM":
-        await ctx.send("⚠️ To execute this, type: `.k!ll CONFIRM`")
+        await ctx.send("If u really wanna nuke type poor server ✌️😭`.k!ll CONFIRM`")
         return
 
     guild = ctx.guild
